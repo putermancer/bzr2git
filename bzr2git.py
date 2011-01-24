@@ -124,7 +124,7 @@ def Main():
                 run("git add .gitignore", 'git commit -m "Migrate old .bzrignore to .gitignore"')
             # create the destination bare repo and push to it; doing this
             # will free up disk space used by commits we just ignored
-            print " * Creating a bate git clone at %s" % gitname
+            print " * Creating a bare git clone at %s" % gitname
             run("git init --bare %s" % gitpath, "git push %s HEAD" % gitpath)
 
         os.chdir(gitpath)
