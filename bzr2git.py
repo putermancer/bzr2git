@@ -22,7 +22,7 @@ def run(*cmds):
 
 def Main():
     parser = OptionParser(usage = USAGE)
-    parser.add_option("-F", "--no-git-flow", dest = "gitflow", action = "store_false", default = True, help = "do not prep the repository for git-flow (default: prep)")
+    parser.add_option("-f", "--git-flow", dest = "gitflow", action = "store_true", default = False, help = "prep the repository for git-flow (default: prep)")
     parser.add_option("-k", "--keep", dest = "keep", action = "store_true", default = False, help = "keep a copy of the original bzr repo on disk")
     parser.add_option("-r", "--repo", dest = "repo", type = "string", help = "url of the repository to convert; if not specified, assumes that 'name' is a local or checked out bzr repository")
     parser.add_option("-t", "--tree-only", dest = "tree", type = "string", help = "subdirectory to create as new project root; other history will be discarded")
