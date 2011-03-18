@@ -130,8 +130,8 @@ def Main():
         os.chdir(gitpath)
         # set up git-flow branches
         if options.gitflow:
-            print " * Prepping branches for git-flow"
-            run("git branch -m master develop", "git branch production")
+            print " * Prepping master and release branches for git-flow"
+            run("git branch release")
 
         # pack the new repo
         print " * Aggressively packing the new repo"
