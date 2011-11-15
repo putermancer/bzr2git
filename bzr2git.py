@@ -22,7 +22,7 @@ def run(*cmds):
 
 def Main():
     parser = OptionParser(usage = USAGE)
-    parser.add_option("-f", "--git-flow", dest = "gitflow", action = "store_true", default = False, help = "prep the repository for git-flow (default: prep)")
+    parser.add_option("-f", "--git-flow", dest = "gitflow", action = "store_true", default = False, help = "prep the repository for git-flow (default: don't prep)")
     parser.add_option("-k", "--keep", dest = "keep", action = "store_true", default = False, help = "keep a copy of the original bzr repo on disk")
     parser.add_option("-r", "--repo", dest = "repo", type = "string", help = "url of the repository to convert; if not specified, assumes that 'name' is a local or checked out bzr repository")
     parser.add_option("-t", "--tree-only", dest = "tree", type = "string", help = "subdirectory to create as new project root; other history will be discarded")
@@ -105,14 +105,14 @@ def Main():
                     MIGRATE_ALL = False
                     # promote the tree and prune all history not pertinent to it
                     print " * Pruning out everything except the %s tree (this may take a while)" % tree
-                    run("git filter-branch --subdirectory-filter %s HEAD -- --all" % tree, "git reset --hard")
+                    run("git filter-branch --subdirectory-filter %s --tag-name-filter cat HEAD -- --all" % tree, "git reset --hard")
                 else:
                     print "   ! Specified tree not found; migrating the whole repo"
             else:
                 MIGRATE_ALL = False
                 # destroy the tree(s) and historical references
                 print " * Destroying the specified tree(s) and all historical commit references (this may take a while)"
-                run('git filter-branch --index-filter "git rm -r -f --cached --ignore-unmatch %s" --prune-empty HEAD' % tree, "git reset --hard")
+                run('git filter-branch --index-filter "git rm -r -f --cached --ignore-unmatch %s" --tag-name-filter cat --prune-empty HEAD' % tree, "git reset --hard")
 
         if MIGRATE_ALL:
             # create the shared bare repo
